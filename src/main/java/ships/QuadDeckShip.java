@@ -1,5 +1,7 @@
+package ships;
+
 public class QuadDeckShip extends Ship {
-    public QuadDeckShip(){
+    public QuadDeckShip() {
         createShip(4);
     }
 }

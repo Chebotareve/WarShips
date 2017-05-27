@@ -1,8 +1,10 @@
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+package ships;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import game.WarShipsGame;
 
 public abstract class Ship {
     private int shipSize;
@@ -67,7 +69,7 @@ public abstract class Ship {
 
     private boolean shipCellsAvailable(List<String> generatedCells) {
         boolean available = true;
-        for (Ship ship : WarShipsGame.shipsList()) {
+        for (Ship ship : WarShipsGame.shipList()) {
             for (String cell : generatedCells) {
                 if (ship.shipCells.contains(cell) || ship.surroundingCells.contains(cell)) {
                     available = false;
@@ -112,8 +114,19 @@ public abstract class Ship {
         return surroundingCellsList;
     }
 
+    public void getStatus() {
+    }
+
+    public boolean isAlive() {
+        return shipCells.size() > 0;
+    }
+
     public void setShipSize(int shipSize) {
         this.shipSize = shipSize;
+    }
+
+    public List<String> shipCells() {
+        return shipCells;
     }
 
     public int shipSize() {

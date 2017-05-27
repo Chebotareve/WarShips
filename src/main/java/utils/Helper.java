@@ -1,11 +1,14 @@
+package utils;
+
 import java.util.Scanner;
 
 public class Helper {
-    public String getUserInput(String prompt) {
+
+    public static String getUserInput(String prompt) {
         boolean loopTrigger = false;
         String tempInputString = "";
         Scanner reader = new Scanner(System.in);
-        while (loopTrigger == false) {
+        while (!loopTrigger) {
             System.out.print(prompt);
             tempInputString = reader.nextLine();
             if (tempInputString.isEmpty()) {

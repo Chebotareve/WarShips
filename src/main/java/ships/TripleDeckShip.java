@@ -1,5 +1,7 @@
+package ships;
+
 public class TripleDeckShip extends Ship {
-    public TripleDeckShip(){
+    public TripleDeckShip() {
         createShip(3);
     }
 }

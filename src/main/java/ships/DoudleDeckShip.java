@@ -1,5 +1,9 @@
+package ships;
+
+import ships.Ship;
+
 public class DoudleDeckShip extends Ship {
-    public DoudleDeckShip(){
+    public DoudleDeckShip() {
         createShip(2);
     }
 
