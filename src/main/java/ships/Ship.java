@@ -12,13 +12,17 @@ public abstract class Ship {
     private List<String> shipCells = new ArrayList<>();
     private List<String> surroundingCells = new ArrayList<>();
 
-    public void createShip(int shipSize) {
-        this.shipSize = shipSize;
-        chooseShipLayout();
-        this.shipCells = generateShipCells();
+    public List<String> shipCells() {
+        return shipCells;
     }
 
-    public void chooseShipLayout() {
+    void createShip(int shipSize) {
+        this.shipSize = shipSize;
+        chooseShipLayout();
+        this.shipCells = deployShip();
+    }
+
+    private void chooseShipLayout() {
         Random random = new Random();
         if (random.nextBoolean()) {
             this.shipDirection = ShipDirection.HORIZONTAL;
@@ -27,7 +31,7 @@ public abstract class Ship {
         }
     }
 
-    public List<String> generateShipCells() {
+    private List<String> deployShip() {
         boolean shipGenerated = false;
         List<String> tempShipCells = new ArrayList<>();
         while (!shipGenerated) {
@@ -54,10 +58,9 @@ public abstract class Ship {
             }
             if (shipCellsAvailable(tempShipCells)) {
                 shipGenerated = true;
-                this.surroundingCells = generateSurrondingCells(initialRow, initialColumn);
+                this.surroundingCells = generateSurroundingCells(initialRow, initialColumn, tempShipCells);
             } else {
                 tempShipCells.clear();
-                continue;
             }
         }
         return tempShipCells;
@@ -83,53 +86,26 @@ public abstract class Ship {
         return available;
     }
 
-    private List<String> generateSurrondingCells(int initialRow, int initialColumn) {
+    private List<String> generateSurroundingCells(int initialRow, int initialColumn, List<String> shipCells) {
         List<String> surroundingCellsList = new ArrayList<>();
         switch (shipDirection) {
             case VERTICAL:
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (initialRow - 1));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (initialRow - 1));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (initialRow - 1));
-                for (int i = initialRow; i < initialRow + shipSize; i++) {
+                for (int i = initialRow - 1; i <= initialRow + shipSize; i++) {
                     surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (i));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (i));
                     surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (i));
                 }
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (initialRow + shipSize));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (initialRow + shipSize));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (initialRow + shipSize));
                 break;
             case HORIZONTAL:
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (initialRow + 1));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (initialRow));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (initialRow - 1));
-                for (int i = initialColumn; i < initialColumn + shipSize; i++) {
+                for (int i = initialColumn - 1; i <= initialColumn + shipSize; i++) {
                     surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow - 1));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow));
                     surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow + 1));
                 }
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + shipSize)) + (initialRow + 1));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + shipSize)) + (initialRow));
-                surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + shipSize)) + (initialRow - 1));
                 break;
         }
+        surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
         return surroundingCellsList;
     }
-
-    public void getStatus() {
-    }
-
-    public boolean isAlive() {
-        return shipCells.size() > 0;
-    }
-
-    public void setShipSize(int shipSize) {
-        this.shipSize = shipSize;
-    }
-
-    public List<String> shipCells() {
-        return shipCells;
-    }
-
-    public int shipSize() {
-        return shipSize;
-    }
+    public abstract void sink (int shipsNumber);
 }

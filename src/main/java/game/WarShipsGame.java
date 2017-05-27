@@ -6,29 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WarShipsGame {
-    private static List<Ship> shipsList = new ArrayList<>();
+    private static List<Ship> shipList = new ArrayList<>();
 
     public static List<Ship> shipList() {
-        return shipsList;
+        return shipList;
     }
 
     public static void main(String[] args) {
         generateShipsList();
         Player player = new Player();
         player.play();
-        player.showStats();
+        player.showSessionStats();
     }
 
     private static void generateShipsList() {
-        shipsList.add(new QuadDeckShip());
-        shipsList.add(new TripleDeckShip());
-        shipsList.add(new TripleDeckShip());
-        shipsList.add(new DoudleDeckShip());
-        shipsList.add(new DoudleDeckShip());
-        shipsList.add(new DoudleDeckShip());
-        shipsList.add(new SingleDeckShip());
-        shipsList.add(new SingleDeckShip());
-        shipsList.add(new SingleDeckShip());
-        shipsList.add(new SingleDeckShip());
+        shipList.add(new QuadDeckShip());
+        shipList.add(new TripleDeckShip());
+        shipList.add(new TripleDeckShip());
+        shipList.add(new DoudleDeckShip());
+        shipList.add(new DoudleDeckShip());
+        shipList.add(new DoudleDeckShip());
+        shipList.add(new SingleDeckShip());
+        shipList.add(new SingleDeckShip());
+        shipList.add(new SingleDeckShip());
+        shipList.add(new SingleDeckShip());
+    }
+
+    static void destroyShip(Ship ship){
+        shipList.remove(ship);
+        ship.sink(shipList.size());
     }
 }
