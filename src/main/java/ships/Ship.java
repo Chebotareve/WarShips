@@ -16,6 +16,8 @@ public abstract class Ship {
         return shipCells;
     }
 
+    public abstract void sink(int shipsLeft);
+
     void createShip(int shipSize) {
         this.shipSize = shipSize;
         chooseShipLayout();
@@ -73,13 +75,19 @@ public abstract class Ship {
     private boolean shipCellsAvailable(List<String> generatedCells) {
         boolean available = true;
         for (Ship ship : WarShipsGame.shipList()) {
-            for (String cell : generatedCells) {
-                if (ship.shipCells.contains(cell) || ship.surroundingCells.contains(cell)) {
-                    available = false;
-                    break;
-                }
+            if (!cellsAvailable(ship, generatedCells)) {
+                available = false;
+                break;
             }
-            if (!available) {
+        }
+        return available;
+    }
+
+    private boolean cellsAvailable(Ship ship, List<String> generatedCells) {
+        boolean available = true;
+        for (String cell : generatedCells) {
+            if (ship.shipCells.contains(cell) || ship.surroundingCells.contains(cell)) {
+                available = false;
                 break;
             }
         }
@@ -107,5 +115,7 @@ public abstract class Ship {
         surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
         return surroundingCellsList;
     }
-    public abstract void sink (int shipsLeft);
+
+
+
 }
