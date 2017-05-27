@@ -107,5 +107,5 @@ public abstract class Ship {
         surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
         return surroundingCellsList;
     }
-    public abstract void sink (int shipsNumber);
+    public abstract void sink (int shipsLeft);
 }

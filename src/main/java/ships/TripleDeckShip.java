@@ -6,7 +6,7 @@ public class TripleDeckShip extends Ship {
     }
 
     @Override
-    public void sink(int shipsNumber) {
-        System.out.println("You've just sunk Triple-Deck ship, " + shipsNumber + " more ship(s) left!");
+    public void sink(int shipsLeft) {
+        System.out.println("You've just sunk Triple-Deck ship, " + shipsLeft + " more ship(s) left!");
     }
 }
