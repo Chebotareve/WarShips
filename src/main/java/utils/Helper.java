@@ -10,6 +10,7 @@ public class Helper {
             System.out.print(prompt);
             try {
                 userInput = readInput();
+                checkTheString(userInput);
             } catch (IncorrectInputException ex) {
                 ex.message();
                 continue;
@@ -19,14 +20,16 @@ public class Helper {
         return userInput;
     }
 
-    private static String readInput() throws IncorrectInputException {
+    public static String readInput() {
         Scanner reader = new Scanner(System.in);
-        String tempInputString = reader.nextLine();
-        if (tempInputString.isEmpty()) {
+        return reader.nextLine();
+    }
+
+    public static void checkTheString(String userInput) throws IncorrectInputException {
+        if (userInput.isEmpty()) {
             throw new IncorrectInputException("You have to put some data here!");
-        } else if (tempInputString.length()>3){
+        } else if (userInput.length() > 3) {
             throw new IncorrectInputException("Too many letters, put valid guess!");
         }
-        return tempInputString;
     }
 }
