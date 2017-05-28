@@ -75,7 +75,7 @@ public abstract class Ship {
     private boolean shipCellsAvailable(List<String> generatedCells) {
         boolean available = true;
         for (Ship ship : WarShipsGame.shipList()) {
-            if (!cellsAvailable(ship, generatedCells)) {
+            if (!generatedCellsTakenByExistingShip(ship, generatedCells)) {
                 available = false;
                 break;
             }
@@ -105,7 +105,7 @@ public abstract class Ship {
         return surroundingCellsList;
     }
 
-    private boolean cellsAvailable(Ship ship, List<String> generatedCells) {
+    private boolean generatedCellsTakenByExistingShip(Ship ship, List<String> generatedCells) {
         boolean available = true;
         for (String cell : generatedCells) {
             if (ship.shipCells.contains(cell) || ship.surroundingCells.contains(cell)) {
