@@ -12,8 +12,16 @@ public abstract class Ship {
     private List<String> shipCells = new ArrayList<>();
     private List<String> surroundingCells = new ArrayList<>();
 
-    public List<String> shipCells() {
-        return shipCells;
+    public void dismissDeck(String deck) {
+        shipCells.remove(deck);
+    }
+
+    public boolean guessMatchShipDeck(String guess) {
+        return shipCells.contains(guess);
+    }
+
+    public int numbersOfLiveDecks() {
+        return shipCells.size();
     }
 
     public abstract void sink(int shipsLeft);
@@ -83,7 +91,6 @@ public abstract class Ship {
         return available;
     }
 
-    //do not care about "out-of-battlefield" cells as they do not affect the game in any way but require a lot of IFs in this method what will hurt readability.
     private List<String> generateSurroundingCells(int initialRow, int initialColumn, List<String> shipCells) {
         List<String> surroundingCellsList = new ArrayList<>();
         switch (shipDirection) {
@@ -106,10 +113,6 @@ public abstract class Ship {
         return surroundingCellsList;
     }
 
-    private String generateCell(int rowNum, int colNum){
-        return String.valueOf(getColumnLetter(colNum)) + rowNum;
-    }
-
     private boolean generatedCellsTakenByExistingShip(Ship ship, List<String> generatedCells) {
         boolean available = true;
         for (String cell : generatedCells) {
@@ -119,6 +122,10 @@ public abstract class Ship {
             }
         }
         return available;
+    }
+
+    private String generateCell(int rowNum, int colNum) {
+        return String.valueOf(getColumnLetter(colNum)) + rowNum;
     }
 
 }

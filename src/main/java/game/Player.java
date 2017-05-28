@@ -7,41 +7,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Player {
-    private List<String> successfulGuesses = new ArrayList<>();
-    private int guessesAmount = 0;
+    private List<String> successfulGuessesList = new ArrayList<>();
+    private int uniqueGuessesAmount = 0;
 
     void showSessionStats() {
-        System.out.println("Congrats, you sunk all ships with " + guessesAmount + " shots!");
+        System.out.println("Congrats, you sunk all ships with " + uniqueGuessesAmount + " shots!");
     }
 
     void play() {
         while (WarShipsGame.shipList().size() > 0) {
             String guess = getUserGuess();
-            guessesAmount++;
+            uniqueGuessesAmount++;
             checkUserGuess(guess);
         }
     }
 
     private String getUserGuess() {
-        boolean unique = false;
-        String guess = "";
-        while (!unique) {
-            guess = Helper.getUserInput("Insert your guess please: ").toLowerCase();
-            if (successfulGuesses.contains(guess)) {
-                System.out.println("You've already hit something here, try another spot");
-            } else {
-                unique = true;
-            }
-        }
-        return guess;
+        return Helper.getUserInput("Insert your guess please: ", successfulGuessesList);
     }
 
     private void checkUserGuess(String guess) {
         GuessResult guessResult = GuessResult.MISS;
         for (Ship ship : WarShipsGame.shipList()) {
-            if (ship.shipCells().contains(guess)) {
-                if (ship.shipCells().size() > 1) {
-                    ship.shipCells().remove(guess);
+            if (ship.guessMatchShipDeck(guess)) {
+                if (ship.numbersOfLiveDecks() > 1) {
+                    ship.dismissDeck(guess);
                     guessResult = GuessResult.HIT;
                     addSuccessfulGuess(guess);
                     break;
@@ -59,6 +49,6 @@ class Player {
     }
 
     private void addSuccessfulGuess(String guess) {
-        successfulGuesses.add(guess);
+        successfulGuessesList.add(guess);
     }
 }

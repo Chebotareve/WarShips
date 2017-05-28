@@ -7,7 +7,7 @@ public class IncorrectInputException extends Exception {
         this.message = message;
     }
 
-    public void message() {
+    void message() {
         System.out.println(message);
     }
 }
