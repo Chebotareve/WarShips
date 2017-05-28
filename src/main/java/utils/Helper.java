@@ -20,12 +20,12 @@ public class Helper {
         return userInput;
     }
 
-    public static String readInput() {
+    private static String readInput() {
         Scanner reader = new Scanner(System.in);
         return reader.nextLine();
     }
 
-    public static void checkTheString(String userInput) throws IncorrectInputException {
+    private static void checkTheString(String userInput) throws IncorrectInputException {
         if (userInput.isEmpty()) {
             throw new IncorrectInputException("You have to put some data here!");
         } else if (userInput.length() > 3) {

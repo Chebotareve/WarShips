@@ -45,15 +45,15 @@ public abstract class Ship {
                     initialRow = (int) (Math.random() * (10 - shipSize)) + 1;
                     initialColumn = (int) (Math.random() * 10) + 1;
                     columnLetter = getColumnLetter(initialColumn);
-                    for (int i = 0; i < shipSize; i++) {
-                        tempShipCells.add(columnLetter + String.valueOf(initialRow + i));
+                    for (int rowsIterator = 0; rowsIterator < shipSize; rowsIterator++) {
+                        tempShipCells.add(columnLetter + String.valueOf(initialRow + rowsIterator));
                     }
                     break;
                 case HORIZONTAL:
                     initialRow = (int) (Math.random() * 10) + 1;
                     initialColumn = (int) (Math.random() * (10 - shipSize)) + 1;
-                    for (int i = 0; i < shipSize; i++) {
-                        columnLetter = getColumnLetter(initialColumn + i);
+                    for (int columnsIterator = 0; columnsIterator < shipSize; columnsIterator++) {
+                        columnLetter = getColumnLetter(initialColumn + columnsIterator);
                         tempShipCells.add(columnLetter + String.valueOf(initialRow));
                     }
                     break;
@@ -83,26 +83,31 @@ public abstract class Ship {
         return available;
     }
 
+    //do not care about "out-of-battlefield" cells as they do not affect the game in any way but require a lot of IFs in this method what will hurt readability.
     private List<String> generateSurroundingCells(int initialRow, int initialColumn, List<String> shipCells) {
         List<String> surroundingCellsList = new ArrayList<>();
         switch (shipDirection) {
             case VERTICAL:
                 for (int rowNumber = initialRow - 1; rowNumber <= initialRow + shipSize; rowNumber++) {
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (rowNumber));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (rowNumber));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (rowNumber));
+                    for (int colNumber = initialColumn - 1; colNumber < initialColumn + 2; colNumber++) {
+                        surroundingCellsList.add(generateCell(rowNumber, colNumber));
+                    }
                 }
                 break;
             case HORIZONTAL:
-                for (int colNumber = initialColumn - 1; colNumber <= initialColumn + shipSize; colNumber++) {
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow - 1));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow + 1));
+                for (int rowNumber = initialRow - 1; rowNumber < initialRow + 2; rowNumber++) {
+                    for (int colNumber = initialColumn - 1; colNumber <= initialColumn + shipSize; colNumber++) {
+                        surroundingCellsList.add(generateCell(rowNumber, colNumber));
+                    }
                 }
                 break;
         }
         surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
         return surroundingCellsList;
+    }
+
+    private String generateCell(int rowNum, int colNum){
+        return String.valueOf(getColumnLetter(colNum)) + rowNum;
     }
 
     private boolean generatedCellsTakenByExistingShip(Ship ship, List<String> generatedCells) {
