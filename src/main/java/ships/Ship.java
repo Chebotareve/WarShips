@@ -83,6 +83,28 @@ public abstract class Ship {
         return available;
     }
 
+    private List<String> generateSurroundingCells(int initialRow, int initialColumn, List<String> shipCells) {
+        List<String> surroundingCellsList = new ArrayList<>();
+        switch (shipDirection) {
+            case VERTICAL:
+                for (int rowNumber = initialRow - 1; rowNumber <= initialRow + shipSize; rowNumber++) {
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (rowNumber));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (rowNumber));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (rowNumber));
+                }
+                break;
+            case HORIZONTAL:
+                for (int colNumber = initialColumn - 1; colNumber <= initialColumn + shipSize; colNumber++) {
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow - 1));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow));
+                    surroundingCellsList.add(String.valueOf(getColumnLetter(colNumber)) + (initialRow + 1));
+                }
+                break;
+        }
+        surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
+        return surroundingCellsList;
+    }
+
     private boolean cellsAvailable(Ship ship, List<String> generatedCells) {
         boolean available = true;
         for (String cell : generatedCells) {
@@ -93,29 +115,5 @@ public abstract class Ship {
         }
         return available;
     }
-
-    private List<String> generateSurroundingCells(int initialRow, int initialColumn, List<String> shipCells) {
-        List<String> surroundingCellsList = new ArrayList<>();
-        switch (shipDirection) {
-            case VERTICAL:
-                for (int i = initialRow - 1; i <= initialRow + shipSize; i++) {
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn - 1)) + (i));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn)) + (i));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(initialColumn + 1)) + (i));
-                }
-                break;
-            case HORIZONTAL:
-                for (int i = initialColumn - 1; i <= initialColumn + shipSize; i++) {
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow - 1));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow));
-                    surroundingCellsList.add(String.valueOf(getColumnLetter(i)) + (initialRow + 1));
-                }
-                break;
-        }
-        surroundingCellsList.removeIf(cell -> shipCells.contains(cell));
-        return surroundingCellsList;
-    }
-
-
 
 }
