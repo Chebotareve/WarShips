@@ -2,7 +2,7 @@ package ships;
 
 public class DoubleDeckShip extends Ship {
     public DoubleDeckShip() {
-        createShip(2);
+        super(2);
     }
 
     @Override
