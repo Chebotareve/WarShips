@@ -2,7 +2,7 @@ package ships;
 
 public class TripleDeckShip extends Ship {
     public TripleDeckShip() {
-        createShip(3);
+        super(3);
     }
 
     @Override

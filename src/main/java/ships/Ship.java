@@ -12,6 +12,12 @@ public abstract class Ship {
     private List<String> shipCells = new ArrayList<>();
     private List<String> surroundingCells = new ArrayList<>();
 
+    public Ship(int shipSize) {
+        this.shipSize = shipSize;
+        chooseShipLayout();
+        this.shipCells = deployShip();
+    }
+
     public void dismissDeck(String deck) {
         shipCells.remove(deck);
     }
@@ -25,12 +31,6 @@ public abstract class Ship {
     }
 
     public abstract void sink(int shipsLeft);
-
-    void createShip(int shipSize) {
-        this.shipSize = shipSize;
-        chooseShipLayout();
-        this.shipCells = deployShip();
-    }
 
     private void chooseShipLayout() {
         Random random = new Random();
