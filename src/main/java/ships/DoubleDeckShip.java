@@ -1,7 +1,7 @@
 package ships;
 
-public class DoudleDeckShip extends Ship {
-    public DoudleDeckShip() {
+public class DoubleDeckShip extends Ship {
+    public DoubleDeckShip() {
         createShip(2);
     }
 

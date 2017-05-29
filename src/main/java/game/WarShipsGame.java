@@ -23,9 +23,9 @@ public class WarShipsGame {
         shipList.add(new QuadDeckShip());
         shipList.add(new TripleDeckShip());
         shipList.add(new TripleDeckShip());
-        shipList.add(new DoudleDeckShip());
-        shipList.add(new DoudleDeckShip());
-        shipList.add(new DoudleDeckShip());
+        shipList.add(new DoubleDeckShip());
+        shipList.add(new DoubleDeckShip());
+        shipList.add(new DoubleDeckShip());
         shipList.add(new SingleDeckShip());
         shipList.add(new SingleDeckShip());
         shipList.add(new SingleDeckShip());
